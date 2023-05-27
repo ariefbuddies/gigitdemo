@@ -1,0 +1,88 @@
+{
+"log": {
+        "disabled": true,
+        "level": "info",
+        "timestamp": false
+    },
+    "route": {
+             "rules": [
+             {
+                    "network": "udp",
+                    "port": [
+                         443
+                    ],
+                    "outbound": "block"
+                    }
+                ]
+             },
+    "dns": {
+    "disable_cache": false,
+    "disable_expire": false
+    },
+    "inbounds": [
+        {
+            "type": "vless",
+            "tag": "vless-in",
+            "listen": "::",
+            "listen_port": 443,
+            "sniff": true,
+            "sniff_override_destination": true,
+            "domain_strategy": "ipv4_only",
+            "users": [
+                {
+        "uuid": "300c4607-5a69-4e2b-9d83-ad36e2b08691", 
+            "flow": "xtls-rprx-vision"
+                }
+            ],
+            "tls": {
+                "enabled": true,
+            "server_name": "www.ruangguru.com", 
+                "reality": {
+                    "enabled": true,
+                    "handshake": {
+                                        "server": "www.ruangguru.com",
+                    "server_port": 443
+                    },
+               "private_key": "2IZnSfW4hu-4MpBv0XSg6OYlEY9Tw7K8WDgw1E1Tdk0", 
+                    "short_id": [ 
+                                       "7e33f1fd12a83d78"
+                    ]
+                }
+            }
+        }
+    ],
+    {
+    "outbounds":[
+        {
+            "protocol":"freedom",
+            "settings":{
+                "domainStrategy":"UseIPv4"
+            },
+            "tag":"IPv4-out"
+        },
+        {
+            "protocol":"freedom",
+            "settings":{
+                "domainStrategy":"UseIPv6"
+            },
+            "tag":"IPv6-out"
+        },
+        {
+            "protocol":"blackhole",
+            "tag":"blackhole-out"
+        },
+        {
+            "tag":"warp",
+            "protocol": "socks",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "127.0.0.1",
+                        "port": 30000,
+                        "users": []
+                    }
+                ]
+            }
+        }
+    ]
+}
