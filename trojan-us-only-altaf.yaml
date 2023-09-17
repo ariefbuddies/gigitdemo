@@ -1,0 +1,151 @@
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7895
+ipv6: true
+mode: rule
+log-level: silent
+allow-lan: true
+external-controller: 0.0.0.0:9090
+secret: ""
+bind-address: "*"
+unified-delay: false
+profile:
+  store-selected: true
+dns:
+  enable: true
+  ipv6: true
+  enhanced-mode: redir-host
+  listen: 0.0.0.0:7874
+  nameserver:
+    - 112.215.198.248
+    - 2001:4860:4860::8888
+  fallback:
+    - 112.215.198.248
+    - 2001:4860:4860::8888
+  default-nameserver:
+    - 112.215.198.248
+    - 2001:4860:4860::8888
+proxies:
+  - name: troya443 - us - shopee
+    server: zendesk3.shopee.tw
+    port: 443
+    type: trojan
+    password: 1KULExGJXF
+    skip-cert-verify: true
+    sni: gigitjari.my.id
+    network: ws
+    ws-opts:
+      path: /bra/
+      headers:
+        Host: gigitjari.my.id
+    xudp: true
+  - name: troya443 - us - edu
+    server: 104.20.75.141
+    port: 443
+    type: trojan
+    password: 1KULExGJXF
+    skip-cert-verify: true
+    sni: gigitjari.my.id
+    network: ws
+    ws-opts:
+      path: /bra/
+      headers:
+        Host: gigitjari.my.id
+    xudp: true
+  - name: troya443 - us - line
+    server: sogood.linefriends.com
+    port: 443
+    type: trojan
+    password: 1KULExGJXF
+    skip-cert-verify: true
+    sni: gigitjari.my.id
+    network: ws
+    ws-opts:
+      path: /bra/
+      headers:
+        Host: gigitjari.my.id
+    xudp: true
+  - name: troya443 - usfms - line
+    server: 2606:4700:10::ac43:1a76
+    port: 443
+    type: trojan
+    password: vSbmDnMRFz
+    skip-cert-verify: true
+    sni: fms.gigitbra.my.id
+    network: ws
+    ws-opts:
+      path: /fms/
+      headers:
+        Host: fms.gigitbra.my.id
+    xudp: false
+  - name: troya443 - usfms - shopee
+    server: zendesk3.shopee.tw
+    port: 443
+    type: trojan
+    password: vSbmDnMRFz
+    skip-cert-verify: true
+    sni: fms.gigitbra.my.id
+    network: ws
+    ws-opts:
+      path: /fms/
+      headers:
+        Host: fms.gigitbra.my.id
+    xudp: true
+  - name: troya443 - usfms - edu
+    server: 104.20.75.141
+    port: 443
+    type: trojan
+    password: vSbmDnMRFz
+    skip-cert-verify: true
+    sni: fms.gigitbra.my.id
+    network: ws
+    ws-opts:
+      path: /fms/
+      headers:
+        Host: fms.gigitbra.my.id
+    xudp: true
+  - name: troya443 - usfms - 381
+    server: 104.17.3.81
+    port: 443
+    type: trojan
+    password: vSbmDnMRFz
+    skip-cert-verify: true
+    sni: fms.gigitbra.my.id
+    network: ws
+    ws-opts:
+      path: /fms/
+      headers:
+        Host: fms.gigitbra.my.id
+    xudp: true
+  - name: troya443 - usfms - ovo
+    server: api.ovo.id
+    port: 443
+    type: trojan
+    password: vSbmDnMRFz
+    skip-cert-verify: true
+    sni: fms.gigitbra.my.id
+    network: ws
+    ws-opts:
+      path: /fms/
+      headers:
+        Host: fms.gigitbra.my.id
+    xudp: true
+proxy-groups:
+  - name: FASTSSH-SSHKIT-HOWDY
+    type: load-balance
+    url: https://mapia.my.id
+    interval: 50
+    strategy: round-robin
+    proxies: 
+     - troya443 - us - shopee
+     - troya443 - us - edu
+     - troya443 - us - line
+     - troya443 - usfms - edu
+     - troya443 - usfms - shopee
+     - troya443 - usfms - line
+     - troya443 - usfms - 381
+     - troya443 - usfms - ovo
+rules:
+  - MATCH,FASTSSH-SSHKIT-HOWDY
